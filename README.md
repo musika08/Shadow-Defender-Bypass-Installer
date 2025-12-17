@@ -1,4 +1,4 @@
-Shadow Defender Universal Installer
+# Shadow Defender Universal Installer
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
 ![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6)
@@ -8,7 +8,7 @@ Shadow Defender Universal Installer
 
 A smart, automated tool designed to make Shadow Defender compatible with modern Windows 10 and 11 systems.
 
-🛑 The Problem
+## 🛑 The Problem
 
 Shadow Defender is a powerful security tool, but its core driver (diskpt.sys) is incompatible with a modern Windows 11 security feature called Core Isolation (Memory Integrity).
 
@@ -16,11 +16,11 @@ Shadow Defender is a powerful security tool, but its core driver (diskpt.sys) is
 
 - Manually fixing this requires editing the Registry and complex reboot sequences.
 
-✅ The Solution
+## ✅ The Solution
 
 This tool automates the entire process. It acts as a "wrapper" that detects system conflicts, prepares your PC, and installs the software safely without you needing to touch technical settings.
 
-⚙️ What It Does (Step-by-Step)
+## ⚙️ What It Does (Step-by-Step)
 
 - System Check: It scans your computer to see if Core Isolation is enabled.
 
@@ -34,7 +34,7 @@ This tool automates the entire process. It acts as a "wrapper" that detects syst
 
 - Clean Up: Once the installation is finished, the tool deletes itself to keep your Downloads/Temp folder clean.
 
-🛡️ Safety & Restoration
+## 🛡️ Safety & Restoration
 
 This tool is designed to respect your system security. When you use this tool to Uninstall Shadow Defender:
 
@@ -42,14 +42,14 @@ This tool is designed to respect your system security. When you use this tool to
 
 - It offers to Re-Enable Core Isolation, restoring your Windows 11 security settings to their original, safe state.
 
-🚀 How to Use
+## 🚀 How to Use
 
-Option 1: The One-Line Command (Fastest) Open PowerShell as Administrator and paste:
+### Option 1: The One-Line Command (Fastest) Open PowerShell as Administrator and paste:
 PowerShell
 
     irm https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1 | iex
 
-Option 2: Manual Download
+### Option 2: Manual Download
 
 - Download ShadowDefenderTool.exe.
 
