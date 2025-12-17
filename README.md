@@ -7,6 +7,7 @@ Shadow Defender Universal Installer
 
 
 A smart, automated tool designed to make Shadow Defender compatible with modern Windows 10 and 11 systems.
+
 🛑 The Problem
 
 Shadow Defender is a powerful security tool, but its core driver (diskpt.sys) is incompatible with a modern Windows 11 security feature called Core Isolation (Memory Integrity).
@@ -18,6 +19,7 @@ Shadow Defender is a powerful security tool, but its core driver (diskpt.sys) is
 ✅ The Solution
 
 This tool automates the entire process. It acts as a "wrapper" that detects system conflicts, prepares your PC, and installs the software safely without you needing to touch technical settings.
+
 ⚙️ What It Does (Step-by-Step)
 
 - System Check: It scans your computer to see if Core Isolation is enabled.
