@@ -7,7 +7,7 @@ import winreg
 import traceback
 
 # --- VERSION CONTROL ---
-APP_VERSION = "1.01"
+APP_VERSION = "1.00"
 # -----------------------
 
 # --- CRASH PROTECTION & IMPORTS ---
@@ -213,17 +213,14 @@ class MainWindow(QMainWindow):
         self.setup_ui()
 
     def generate_icon(self):
-        # [CHANGED] Now generates a solid light blue circle
+        # [NEW] Light Blue Icon (No rectangle)
         pixmap = QPixmap(64, 64)
         pixmap.fill(Qt.GlobalColor.transparent)
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        # Use Light Blue color
         painter.setBrush(QBrush(QColor("#00CCFF"))) 
         painter.setPen(Qt.PenStyle.NoPen)
-        # Draw circle
         painter.drawEllipse(4, 4, 56, 56)
-        # Rectangle drawing removed
         painter.end()
         return QIcon(pixmap)
 
@@ -246,7 +243,7 @@ class MainWindow(QMainWindow):
             QProgressBar::chunk { background-color: #00ff7f; border-radius: 4px; }
         """)
 
-        # Icon Logic: Try to load 'icon.ico', otherwise generate the blue one
+        # Icon Logic
         icon_file = os.path.join(BASE_DIR, "icon.ico")
         if os.path.exists(icon_file):
             self.setWindowIcon(QIcon(icon_file))
