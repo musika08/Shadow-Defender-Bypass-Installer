@@ -15,7 +15,7 @@ A modern, automated installer designed to install Shadow Defender on Windows 11 
 ## 🛠️ Requirements
 * Windows 10 or Windows 11 (x64)
 * **7-Zip** or **WinRAR** installed.
-* **Python 3.x** installed.
+* **Python 3.x** installed and added to the PATH
 
 ## 📥 How to Use
 1.  Download the **ZIP** of this repository.
