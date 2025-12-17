@@ -20,7 +20,7 @@ A modern, automated installer designed to install Shadow Defender on Windows 11 
 ## 📥 How to Use
 1.  Download the **ZIP** of this repository.
 2.  Double-click `requirements.bat` to install necessary libraries.
-3.  Run `Bypass.py`.
+3.  Run `setup.py`.
 4.  Click **INSTALL NOW**.
 
 ## ⚠️ Disclaimer
