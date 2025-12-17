@@ -8,6 +8,8 @@ Write-Host " [~] Fetching Shadow Defender Tool from GitHub..." -ForegroundColor 
 
 try {
     # Download the latest executable
+    # Using [Net.ServicePointManager]::SecurityProtocol to ensure GitHub connection works on older systems
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
     Invoke-WebRequest -Uri $DownloadUrl -OutFile $TempPath -ErrorAction Stop
 }
 catch {
@@ -16,5 +18,7 @@ catch {
 }
 
 Write-Host " [+] Starting Installer..." -ForegroundColor Green
+
 # Run as Admin
-Start-Process -FilePath $TempPath -Verb RunAs8XKHG-HXTW7-QWNX4-5MDX7-4R7CZ
+# [FIXED] Removed the accidental license key that was merged into the RunAs verb
+Start-Process -FilePath $TempPath -Verb RunAs
