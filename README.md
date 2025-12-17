@@ -17,4 +17,4 @@
 Install via your terminal (Admin) with this one-line command:
 
 ```powershell
-irm [https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1](https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1) | iex
+irm https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1 | iex
