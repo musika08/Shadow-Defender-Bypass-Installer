@@ -1,8 +1,7 @@
-# 🛡️ Shadow Defender Tool (v1.00)
+# 🛡️ Shadow Defender Bypass Installer (v1.00)
 
 ![Version](https://img.shields.io/badge/version-v1.00-blue?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-blue?style=flat-square)
-![Python](https://img.shields.io/badge/built%20with-Python%203%20%2B%20PyQt6-yellow?style=flat-square)
 [![Support](https://img.shields.io/badge/ko--fi-Support%20Creator-ff5f5f?style=flat-square&logo=ko-fi)](https://ko-fi.com/musika)
 
 A specialized utility designed to install **Shadow Defender** on modern Windows systems (Windows 10/11) by automatically handling compatibility conflicts with **Core Isolation (Memory Integrity)**.
@@ -36,56 +35,10 @@ This tool automates the bypass process:
 
 ---
 
-## 📥 Installation & Usage
+## 📥 Installation
 
-### Option 1: The Easy Way (Recommended)
-_Best for users who just want to use the tool._
+### Method 1: PowerShell One-Liner (Fastest)
+Run this command in **PowerShell** to download and launch the tool automatically:
 
-1.  Go to the [**Releases**](https://github.com/YOUR_USERNAME/YOUR_REPO/releases) page.
-2.  Download **`ShadowDefenderTool.exe`**.
-3.  Right-click and select **Run as Administrator**.
-4.  Click **INSTALL**.
-    * *If Core Isolation is detected, accept the prompt to disable it and reboot your PC.*
-
-### Option 2: The Developer Way (Source Code)
-_Best for developers who want to modify the script._
-
-1.  Clone this repository or download the Source Code zip.
-2.  Run the dependency manager:
-    ```cmd
-    requirements.bat
-    ```
-    *(This will install Python libraries like PyQt6, requests, and urllib3 via a custom CLI dashboard)*.
-3.  Run the tool:
-    ```cmd
-    python setup.py
-    ```
-
-### ⚙️ How to Compile (Build .exe)
-If you want to build your own executable from the source:
-1.  Ensure you have run `requirements.bat`.
-2.  Double-click **`build.bat`**.
-3.  The script will automatically detect your environment, generate the icon, and produce a standalone file in the `dist/` folder.
-
----
-
-## 📸 Screenshots
-
-| Installer Dashboard | Uninstall Mode |
-|:---:|:---:|
-| *(Add a screenshot of your Blue GUI here)* | *(Add a screenshot of the Uninstall confirmation here)* |
-
----
-
-## ⚠️ Disclaimer
-This tool modifies Windows Registry keys related to Virtualization-based Security (VBS) to allow legacy drivers to load.
-* **Use at your own risk.**
-* Disabling Core Isolation lowers security slightly to allow the Shadow Defender driver to function.
-* Always ensure you are using valid software licenses.
-
-## ☕ Support the Developer
-If this tool saved you time or fixed your installation, consider buying me a coffee!
-
-<a href='https://ko-fi.com/musika' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
-**Created by Musika**
+```powershell
+iwr -useb [https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1](https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1) | iex
