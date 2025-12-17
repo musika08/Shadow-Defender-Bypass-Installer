@@ -11,7 +11,6 @@ APP_VERSION = "1.01"
 # -----------------------
 
 # --- CRASH PROTECTION & IMPORTS ---
-# We wrap ALL imports in try/except to catch missing libraries
 try:
     import requests
     import urllib3
@@ -22,11 +21,9 @@ try:
     from PyQt6.QtCore import Qt, pyqtSignal, QThread, QUrl
     from PyQt6.QtGui import QFont, QPalette, QColor, QIcon, QPixmap, QPainter, QBrush, QDesktopServices
 except ImportError as e:
-    # If a library is missing, show an error instead of closing silently
     ctypes.windll.user32.MessageBoxW(0, f"Error: Missing Libraries.\n\n{e}\n\nPlease run 'requirements.bat' first!", "Dependency Error", 0x10)
     sys.exit(1)
 except Exception as e:
-    # Catch generic import errors
     ctypes.windll.user32.MessageBoxW(0, f"Startup Error:\n\n{e}", "Fatal Error", 0x10)
     sys.exit(1)
 
@@ -34,10 +31,11 @@ except Exception as e:
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # --- Configuration ---
-# [FIX] Ensures files appear next to the .exe, not in a temp folder
 if getattr(sys, 'frozen', False):
+    # If running as compiled .exe
     BASE_DIR = os.path.dirname(sys.executable)
 else:
+    # If running as .py script
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 TEMP_DIR = os.path.join(BASE_DIR, "_SD_Temp_Install")
@@ -215,15 +213,17 @@ class MainWindow(QMainWindow):
         self.setup_ui()
 
     def generate_icon(self):
+        # [CHANGED] Now generates a solid light blue circle
         pixmap = QPixmap(64, 64)
         pixmap.fill(Qt.GlobalColor.transparent)
         painter = QPainter(pixmap)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-        painter.setBrush(QBrush(QColor("#00ff7f"))) 
+        # Use Light Blue color
+        painter.setBrush(QBrush(QColor("#00CCFF"))) 
         painter.setPen(Qt.PenStyle.NoPen)
+        # Draw circle
         painter.drawEllipse(4, 4, 56, 56)
-        painter.setBrush(QBrush(QColor("#1a1a1a"))) 
-        painter.drawRect(20, 15, 24, 34)
+        # Rectangle drawing removed
         painter.end()
         return QIcon(pixmap)
 
@@ -246,7 +246,12 @@ class MainWindow(QMainWindow):
             QProgressBar::chunk { background-color: #00ff7f; border-radius: 4px; }
         """)
 
-        self.setWindowIcon(self.generate_icon())
+        # Icon Logic: Try to load 'icon.ico', otherwise generate the blue one
+        icon_file = os.path.join(BASE_DIR, "icon.ico")
+        if os.path.exists(icon_file):
+            self.setWindowIcon(QIcon(icon_file))
+        else:
+            self.setWindowIcon(self.generate_icon())
 
         central = QWidget()
         self.setCentralWidget(central)
