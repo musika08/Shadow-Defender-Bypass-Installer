@@ -9,7 +9,7 @@ import urllib3
 import traceback
 
 # --- VERSION CONTROL ---
-APP_VERSION = "1.02"
+APP_VERSION = "1.01"
 # -----------------------
 
 # --- CRASH PROTECTION & IMPORTS ---
