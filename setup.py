@@ -415,17 +415,6 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Error", f"Could not disable Core Isolation:\n{e}")
             return False
 
-    def register_program(self):
-        key_serial = "8XKHG-HXTW7-QWNX4-5MDX7-4R7CZ"
-        organization = "Shadow Defender User"
-        try:
-            path = r"SOFTWARE\Shadow Defender"
-            with winreg.CreateKey(winreg.HKEY_LOCAL_MACHINE, path) as reg_key:
-                winreg.SetValueEx(reg_key, "Name", 0, winreg.REG_SZ, organization)
-                winreg.SetValueEx(reg_key, "Code", 0, winreg.REG_SZ, key_serial)
-            return True
-        except: return False
-
     def offer_security_restore(self):
         msg = QMessageBox()
         msg.setWindowTitle("Security Check")
