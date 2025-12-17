@@ -2,6 +2,7 @@
 
 ![Version](https://img.shields.io/badge/version-v1.00-blue?style=flat-square)
 ![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-blue?style=flat-square)
+![Python](https://img.shields.io/badge/built%20with-Python%203%20%2B%20PyQt6-yellow?style=flat-square)
 [![Support](https://img.shields.io/badge/ko--fi-Support%20Creator-ff5f5f?style=flat-square&logo=ko-fi)](https://ko-fi.com/musika)
 
 A specialized utility designed to install **Shadow Defender** on modern Windows systems (Windows 10/11) by automatically handling compatibility conflicts with **Core Isolation (Memory Integrity)**.
@@ -41,4 +42,11 @@ This tool automates the bypass process:
 Run this command in **PowerShell** to download and launch the tool automatically:
 
 ```powershell
-iwr -useb [https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1](https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1) | iex
+iwr -useb https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1 | iex
+
+## ☕ Support the Developer
+If this tool saved you time or fixed your installation, consider buying me a coffee!
+
+<a href='https://ko-fi.com/musika' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+
+**Created by Musika**
