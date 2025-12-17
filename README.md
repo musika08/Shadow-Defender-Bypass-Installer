@@ -12,13 +12,9 @@
 > **The Solution:** This tool automates the bypass, installs the software, registers it, and re-secures your PC when you are done.
 
 ---
-
 ## 🚀 Quick Install (PowerShell)
 
-You can install this tool directly via an elevated PowerShell terminal, similar to the "WinUtil" method.
-
-1. Right-click Start and select **Terminal (Admin)** or **PowerShell (Admin)**.
-2. Paste the following command and hit Enter:
+Install via your terminal (Admin) with this one-line command:
 
 ```powershell
-iwr -useb [https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1](https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1) | iex
+irm [https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1](https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1) | iex
