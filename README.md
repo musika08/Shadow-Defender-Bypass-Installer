@@ -1,52 +1,24 @@
-# 🛡️ Shadow Defender Bypass Installer (v1.00)
+# Shadow Defender Tool (Windows 11 Fix)
 
-![Version](https://img.shields.io/badge/version-v1.00-blue?style=flat-square)
-![Platform](https://img.shields.io/badge/platform-Windows%2010%20%7C%2011-blue?style=flat-square)
-![Python](https://img.shields.io/badge/built%20with-Python%203%20%2B%20PyQt6-yellow?style=flat-square)
-[![Support](https://img.shields.io/badge/ko--fi-Support%20Creator-ff5f5f?style=flat-square&logo=ko-fi)](https://ko-fi.com/musika)
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue)
+![Platform](https://img.shields.io/badge/Platform-Windows%2010%20%7C%2011-0078D6)
+![Version](https://img.shields.io/badge/Version-1.00-green)
+[![Support](https://img.shields.io/badge/Support-Ko--fi-FF5E5B)](https://ko-fi.com/musika)
 
-A specialized utility designed to install **Shadow Defender** on modern Windows systems (Windows 10/11) by automatically handling compatibility conflicts with **Core Isolation (Memory Integrity)**.
+**A professional, automated installer for Shadow Defender that resolves the "Core Isolation/Memory Integrity" incompatibility on Windows 11.**
 
-## 🚧 The Problem
-On Windows 11 and newer builds of Windows 10, **Core Isolation (Memory Integrity)** prevents the Shadow Defender driver from loading, causing installation failures or Blue Screens (BSOD).
-
-## 💡 The Solution
-This tool automates the bypass process:
-1.  **Detects** if Core Isolation is active in the Registry.
-2.  **Disables** the conflict automatically (with user permission).
-3.  **Installs** the software safely after the necessary reboot.
+> **The Problem:** Shadow Defender's driver (`diskpt.sys`) is incompatible with Windows 11's Memory Integrity feature, causing installation failures or Blue Screens (BSOD).
+>
+> **The Solution:** This tool automates the bypass, installs the software, registers it, and re-secures your PC when you are done.
 
 ---
 
-## ✨ Features
+## 🚀 Quick Install (PowerShell)
 
-### 🖥️ Modern GUI Dashboard
-- Clean, dark-mode interface built with **PyQt6**.
-- Real-time progress bars for downloading and extraction.
-- **Light Blue** status indicators and custom iconography.
+You can install this tool directly via an elevated PowerShell terminal, similar to the "WinUtil" method.
 
-### ⚡ Smart Installation
-- **Auto-Download:** Automatically fetches the official `setup.exe` from Shadow Defender servers if missing.
-- **Deep Extraction:** Uses internal logic to extract the core installer from the downloaded wrapper (supports auto-detection of 7-Zip/WinRAR).
-- **Core Isolation Bypass:** Modifies `HypervisorEnforcedCodeIntegrity` registry keys to ensure driver compatibility.
-
-### 🗑️ One-Click Uninstaller
-- Includes a dedicated **Red "UNINSTALL" button**.
-- Automatically locates the installation path and executes the clean removal process.
-
----
-
-## 📥 Installation
-
-### Method 1: PowerShell One-Liner (Fastest)
-Run this command in **PowerShell** to download and launch the tool automatically:
+1. Right-click Start and select **Terminal (Admin)** or **PowerShell (Admin)**.
+2. Paste the following command and hit Enter:
 
 ```powershell
-iwr -useb https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1 | iex
-
-## ☕ Support the Developer
-If this tool saved you time or fixed your installation, consider buying me a coffee!
-
-<a href='https://ko-fi.com/musika' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi2.png?v=3' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
-
-**Created by Musika**
+iwr -useb [https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1](https://raw.githubusercontent.com/musika08/Shadow-Defender-Bypass-Installer/main/install.ps1) | iex
