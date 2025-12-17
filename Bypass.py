@@ -8,6 +8,10 @@ import winreg
 import urllib3
 import traceback
 
+# --- VERSION CONTROL ---
+APP_VERSION = "1.02"
+# -----------------------
+
 # --- CRASH PROTECTION & IMPORTS ---
 try:
     from PyQt6.QtWidgets import (
@@ -30,6 +34,9 @@ SETUP_FILENAME = "ShadowDefenderSetup.exe"
 SETUP_PATH = os.path.join(BASE_DIR, SETUP_FILENAME)
 TARGET_INSTALL_PATH = r"C:\Program Files\Shadow Defender\ShadowDefender.exe"
 TARGET_INSTALL_PATH_X86 = r"C:\Program Files (x86)\Shadow Defender\ShadowDefender.exe"
+UNINSTALLER_PATH = r"C:\Program Files\Shadow Defender\Uninstall.exe"
+UNINSTALLER_PATH_X86 = r"C:\Program Files (x86)\Shadow Defender\Uninstall.exe"
+
 HEADERS = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'}
 
 DOWNLOAD_URLS = [
@@ -88,10 +95,35 @@ class Worker(QThread):
 
     def run(self):
         try:
-            if self.mode == "download": self.download_setup()
+            if self.mode == "download": 
+                self.download_setup()
+            elif self.mode == "uninstall":
+                self.run_uninstall()
+                return
+
             self.process_pipeline()
         except Exception as e:
             self.error_occurred.emit(str(e))
+
+    def run_uninstall(self):
+        target_uninstaller = None
+        if os.path.exists(UNINSTALLER_PATH):
+            target_uninstaller = UNINSTALLER_PATH
+        elif os.path.exists(UNINSTALLER_PATH_X86):
+            target_uninstaller = UNINSTALLER_PATH_X86
+        
+        if not target_uninstaller:
+            raise Exception("Uninstaller not found. Is Shadow Defender installed?")
+
+        self.status_update.emit("Uninstalling...", "#ff4444")
+        self.progress_update.emit(50)
+        
+        # Run the uninstaller
+        subprocess.run([target_uninstaller], check=True)
+        
+        self.status_update.emit("Uninstalled", "#aaaaaa")
+        self.progress_update.emit(100)
+        self.finished_result.emit(True)
 
     def download_setup(self):
         self.status_update.emit("Downloading Setup...", "#00ffff")
@@ -188,8 +220,8 @@ class MainWindow(QMainWindow):
         QDesktopServices.openUrl(QUrl("https://ko-fi.com/musika"))
 
     def setup_ui(self):
-        self.setWindowTitle("Shadow Defender Tool")
-        self.setFixedSize(420, 390)
+        self.setWindowTitle(f"Shadow Defender Tool v{APP_VERSION}")
+        self.setFixedSize(420, 420) # Slightly taller for dual buttons
         
         self.setStyleSheet("""
             QMainWindow { background-color: #1a1a1a; }
@@ -211,7 +243,7 @@ class MainWindow(QMainWindow):
         lay.setSpacing(20)
         lay.setContentsMargins(40, 35, 40, 20)
 
-        # Title
+        # Title Layout
         self.title = QLabel("SHADOW DEFENDER")
         self.title.setFont(QFont("Segoe UI", 20, QFont.Weight.Bold))
         self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
@@ -252,11 +284,16 @@ class MainWindow(QMainWindow):
 
         lay.addStretch()
 
-        self.btn = QPushButton("INSTALL NOW")
-        self.btn.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.btn.setMinimumHeight(50)
-        self.btn.clicked.connect(lambda: self.start_process_flow())
-        self.btn.setStyleSheet("""
+        # --- BUTTONS LAYOUT (Install & Uninstall) ---
+        btn_layout = QHBoxLayout()
+        btn_layout.setSpacing(10)
+
+        # INSTALL BUTTON
+        self.btn_install = QPushButton("INSTALL")
+        self.btn_install.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_install.setMinimumHeight(50)
+        self.btn_install.clicked.connect(lambda: self.start_process_flow("install"))
+        self.btn_install.setStyleSheet("""
             QPushButton {
                 background-color: #2d2d2d;
                 color: white;
@@ -270,21 +307,42 @@ class MainWindow(QMainWindow):
                 border-color: #00ff7f;
                 color: #00ff7f;
             }
-            QPushButton:pressed {
-                background-color: #222;
-            }
-            QPushButton:disabled {
-                color: #555;
-                border-color: #222;
-            }
+            QPushButton:pressed { background-color: #222; }
+            QPushButton:disabled { color: #555; border-color: #222; }
         """)
-        lay.addWidget(self.btn)
+        btn_layout.addWidget(self.btn_install)
 
-        # --- FOOTER LAYOUT (Signature + Ko-fi) ---
+        # UNINSTALL BUTTON
+        self.btn_uninstall = QPushButton("UNINSTALL")
+        self.btn_uninstall.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.btn_uninstall.setMinimumHeight(50)
+        self.btn_uninstall.clicked.connect(lambda: self.start_process_flow("uninstall"))
+        self.btn_uninstall.setStyleSheet("""
+            QPushButton {
+                background-color: #2d2d2d;
+                color: #ffaaaa;
+                border: 1px solid #552222;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 13px;
+            }
+            QPushButton:hover {
+                background-color: #3d2222;
+                border-color: #ff4444;
+                color: #ff4444;
+            }
+            QPushButton:pressed { background-color: #221111; }
+            QPushButton:disabled { color: #555; border-color: #222; }
+        """)
+        btn_layout.addWidget(self.btn_uninstall)
+
+        lay.addLayout(btn_layout)
+
+        # --- FOOTER LAYOUT ---
         footer_layout = QHBoxLayout()
         footer_layout.setContentsMargins(0, 5, 0, 0)
         
-        # Support Button (Ko-fi)
+        # Support
         self.btn_kofi = QPushButton("☕ Support")
         self.btn_kofi.setCursor(Qt.CursorShape.PointingHandCursor)
         self.btn_kofi.clicked.connect(self.open_kofi)
@@ -298,14 +356,21 @@ class MainWindow(QMainWindow):
                 font-size: 10px;
             }
             QPushButton:hover {
-                background-color: #29abe0; /* Ko-fi Blue */
+                background-color: #29abe0;
                 color: white;
                 border-color: #29abe0;
             }
         """)
         footer_layout.addWidget(self.btn_kofi)
         
-        footer_layout.addStretch() # Spacer
+        footer_layout.addStretch()
+
+        # Version
+        self.version_lab = QLabel(f"v{APP_VERSION}")
+        self.version_lab.setStyleSheet("color: #444444; font-size: 10px; font-weight: bold;")
+        footer_layout.addWidget(self.version_lab)
+
+        footer_layout.addStretch()
 
         # Signature
         self.sig = QLabel("by Musika")
@@ -334,7 +399,17 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Registry Error", f"Could not disable Core Isolation:\n{e}")
             return False
 
-    def start_process_flow(self):
+    def start_process_flow(self, action_type):
+        # UNINSTALL FLOW
+        if action_type == "uninstall":
+            confirm = QMessageBox.question(self, "Confirm Uninstall", 
+                "Are you sure you want to remove Shadow Defender?", 
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+            if confirm == QMessageBox.StandardButton.Yes:
+                self.start_worker("uninstall")
+            return
+
+        # INSTALL FLOW (Check Core Isolation First)
         if self.is_core_isolation_on():
             msg = QMessageBox()
             msg.setWindowTitle("Conflict Detected")
@@ -362,8 +437,14 @@ class MainWindow(QMainWindow):
         self.start_worker("auto")
 
     def start_worker(self, mode):
-        self.btn.setEnabled(False)
-        self.btn.setText("PROCESSING...")
+        self.btn_install.setEnabled(False)
+        self.btn_uninstall.setEnabled(False)
+        
+        if mode == "uninstall":
+            self.btn_uninstall.setText("...")
+        else:
+            self.btn_install.setText("PROCESSING...")
+            
         self.pbar.setValue(0)
         self.worker = Worker(mode)
         self.worker.status_update.connect(self.update_status) 
@@ -388,10 +469,15 @@ class MainWindow(QMainWindow):
             try: shutil.rmtree(TEMP_DIR)
             except: pass
 
-        if success:
-            QMessageBox.information(self, "Success", "Installation Verified Successfully.")
-            self.reset("Installed Successfully", "#00ff7f") 
-        else: self.reset("Setup Not Completed", "#ffcc00")
+        # Check if it was an uninstall or install based on worker mode
+        if self.worker.mode == "uninstall":
+             QMessageBox.information(self, "Uninstall", "Uninstaller process finished.")
+             self.reset("Uninstalled", "#aaaaaa")
+        else:
+            if success:
+                QMessageBox.information(self, "Success", "Installation Verified Successfully.")
+                self.reset("Installed Successfully", "#00ff7f") 
+            else: self.reset("Setup Not Completed", "#ffcc00")
 
     def err(self, m):
         QMessageBox.critical(self, "Error", m)
@@ -400,8 +486,10 @@ class MainWindow(QMainWindow):
     def reset(self, txt, color="#888888"):
         self.status.setText(txt)
         self.status.setStyleSheet(f"color: {color};")
-        self.btn.setEnabled(True)
-        self.btn.setText("INSTALL NOW")
+        self.btn_install.setEnabled(True)
+        self.btn_uninstall.setEnabled(True)
+        self.btn_install.setText("INSTALL")
+        self.btn_uninstall.setText("UNINSTALL")
         self.pbar.setValue(0)
 
 if __name__ == "__main__":
